@@ -32,6 +32,11 @@ function vimeo_field_schema($field) {
           'length' => 512,
           'default' => '',
         ),
+        'html' => array(
+          'type' => 'varchar',
+          'length' => 512,
+          'default' => '',
+        ),
       );
       $indexes = array();
       break;
