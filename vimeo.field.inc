@@ -192,16 +192,14 @@ function vimeo_field_presave($entity_type, $entity, $field, $instance, $langcode
 
       $items[$delta]['thumbnail_path'] = $local_path;
     }
-    // Couldn't get the thumbnail for whatever reason
+    // Couldn't get the thumbnail for whatever reason.
     else {
       $items[$delta]['thumbnail_path'] = '';
     }
 
-    // @todo: Save file locally.
+    // @todo: remove adition check.
     if (isset($info)) {
-      // $items[$delta]['thumbnail_path'] = $info->thumbnail_url;
       $items[$delta]['video_id'] = $info->video_id;
-
     }
   }
 }

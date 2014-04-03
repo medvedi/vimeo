@@ -6,8 +6,16 @@
  * @author Alexei Goja
  */
 
-// Load our default handlers
-// module_load_include('inc', 'vimeo', 'vimeo.handlers');
-
+// Load our default field hooks
 module_load_include('inc', 'vimeo', 'vimeo.field');
+
 /* --- HOOKS ---------------------------------------------------------------- */
+
+/**
+ * Implements of ctools_plugin_directory().
+ */
+function vimeo_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools') {
+    return 'plugins/' . $plugin;
+  }
+}
