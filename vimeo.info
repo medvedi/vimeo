@@ -1,0 +1,9 @@
+name = "Vimeo TEST"
+description = "Create a field type for videos from vimeo."
+core = 7.x
+package = Media
+
+files[] = vimeo.handlers.inc
+files[] = vimeo.field.inc
+
+dependencies[] = ctools

@@ -1,0 +1,21 @@
+<?php
+/**
+ * @file
+ * Provides a simple field for videos from vimeo
+ *
+ * @author Alexei Goja
+ */
+
+// Load our default field hooks
+module_load_include('inc', 'vimeo', 'vimeo.field');
+
+/* --- HOOKS ---------------------------------------------------------------- */
+
+/**
+ * Implements of ctools_plugin_directory().
+ */
+function vimeo_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools') {
+    return 'plugins/' . $plugin;
+  }
+}

@@ -1,0 +1,44 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the vimeo module.
+ *
+ */
+
+/**
+ * Install file for vimeo module
+ * @author Alexei Goja
+ */
+
+/**
+ * Implements hook_field_schema().
+ */
+function vimeo_field_schema($field) {
+  switch ($field['type']) {
+    case 'vimeo_field':
+      $columns = array(
+        'video_url' => array(
+          'type' => 'varchar',
+          'length' => 512,
+          'default' => '',
+        ),
+        'thumbnail_path' => array(
+          'type' => 'varchar',
+          'length' => 512,
+          'default' => '',
+        ),
+        'video_id' => array(
+          'type' => 'varchar',
+          'length' => 512,
+          'default' => '',
+        ),
+      );
+      $indexes = array();
+      break;
+  }
+
+  return array(
+    'columns' => $columns,
+    'indexes' => $indexes,
+  );
+}
