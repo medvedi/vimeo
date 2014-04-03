@@ -14,7 +14,7 @@ module_load_include('inc', 'vimeo', 'vimeo.handlers');
  */
 function vimeo_field_info() {
   return array(
-    'vimeo_field' => array(
+    'vimeo_field'  => array(
       'label' => 'Vimeo field',
       'description' => 'Videos from vimeo',
       'settings' => array(),
@@ -117,6 +117,7 @@ function vimeo_field_widget_form(&$form, &$form_state, $field, $instance, $langc
   $element['video_url'] = array(
     '#type' => 'textfield',
     '#title' => t('Video URL'),
+    '#description' => t('Note: Link should be absolute. Example: http://vimeo.com/borisseewald/momentum.'),
     '#default_value' => isset($items[$delta]['video_url']) ? $items[$delta]['video_url'] : '',
     '#required' => $element['#required'],
   );
@@ -130,31 +131,39 @@ function vimeo_field_widget_form(&$form, &$form_state, $field, $instance, $langc
 function vimeo_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
   foreach ($items as $delta => $item) {
     if (!empty($item['video_url'])) {
-      $item['video_url'] = trim($item['video_url']);
-      if (stristr($item['video_url'], '.') && !stristr($item['video_url'], 'http://') && !stristr($item['video_url'], 'https://')) {
-        $item['video_url'] = 'http://' . $item['video_url'];
-      }
-
-      $parts = parse_url($item['video_url']);
-
-      if (!$parts || !isset($parts['host'])) {
-        $errors[$field['field_name']][$langcode][$delta][] = array(
-          'error' => t('Invalid Url'),
-          'message' => t('Video: Invalid Video URL.', array('%name' => $instance['label'])),
-        );
-      }
-      else {
-        $host = $parts['host'];
-        if (stripos($host, 'www.') > -1) {
-          $host = substr($host, 4);
+      if (valid_url($item['video_url'], TRUE)) {
+        $item['video_url'] = trim($item['video_url']);
+        if (stristr($item['video_url'], '.') && !stristr($item['video_url'], 'http://') && !stristr($item['video_url'], 'https://')) {
+          $item['video_url'] = 'http://' . $item['video_url'];
         }
 
-        if ($host != 'vimeo.com') {
+        $parts = parse_url($item['video_url']);
+
+        if (!$parts || !isset($parts['host'])) {
           $errors[$field['field_name']][$langcode][$delta][] = array(
-            'error' => t('Unsupported Video Provider'),
-            'message' => t('%name: This video provider is not currently supported.', array('%name' => $instance['label'])),
+            'error' => t('Invalid Url'),
+            'message' => t('Video: Invalid Video URL.', array('%name' => $instance['label'])),
           );
         }
+        else {
+          $host = $parts['host'];
+          if (stripos($host, 'www.') > -1) {
+            $host = substr($host, 4);
+          }
+
+          if ($host != 'vimeo.com') {
+            $errors[$field['field_name']][$langcode][$delta][] = array(
+              'error' => t('Unsupported Video Provider'),
+              'message' => t('%name: This video provider is not currently supported.', array('%name' => $instance['label'])),
+            );
+          }
+        }
+      }
+      else {
+        $errors[$field['field_name']][$langcode][$delta][] = array(
+          'error' => t('Unsupported link type'),
+          'message' => t('%name: Link should be absolute.', array('%name' => $instance['label'])),
+        );
       }
     }
   }
@@ -197,7 +206,7 @@ function vimeo_field_presave($entity_type, $entity, $field, $instance, $langcode
       $items[$delta]['thumbnail_path'] = '';
     }
 
-    // @todo: remove adition check.
+    // @todo: remove aditional check.
     if (isset($info)) {
       $items[$delta]['video_id'] = $info->video_id;
     }

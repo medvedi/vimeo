@@ -36,7 +36,7 @@ function vimeo_pane_content_type_render($subtype, $conf, $args, $contexts) {
     ->execute()
     ->fetchAll();
 
-  // Create nides array for render.
+  // Create nids array for render.
   if ($results) {
     $nodes = array();
     foreach ($results as $result) {
