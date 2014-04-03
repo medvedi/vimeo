@@ -47,7 +47,7 @@ function vimeo_property_info_callback(&$info, $entity_type, $field, $instance, $
 }
 
 /**
- * Defines info for the properties of the video_embed_field data structure.
+ * Defines info for the properties of the vimeo data structure.
  */
 function vimeo_field_data_property_info($name = NULL) {
   // Build an array of basic property information for vimeo field.
