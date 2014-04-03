@@ -28,23 +28,30 @@ function vimeo_pane_content_type_render($subtype, $conf, $args, $contexts) {
   // Perfomance debug info
   // $start = microtime(TRUE);
 
+ try {
+  $field_name = $conf[$conf['content'] . '_field_list'];
+
   // Get random 3 nodes based on selected field.
-  $results = db_select('field_revision_field_vimeo_field', 'fvf')
-    ->fields('fvf', array('entity_id'))
+  $results = db_select('field_data_' . $field_name, 'fd')
+    ->fields('fd', array('entity_id'))
     ->range(0,3)
     ->orderRandom()
     ->execute()
     ->fetchAll();
+ }
+ catch (Exception $e) {
+  // Log the error.
+ }
 
   // Create nids array for render.
-  if ($results) {
+  if (isset($results)) {
     $nodes = array();
     foreach ($results as $result) {
       $nids[] = $result->entity_id;
     }
+    // Let's create our output.
+    $block->content = render(node_view_multiple(node_load_multiple($nids), $conf['display_mode']));
   }
-
-  $block->content = render(node_view_multiple(node_load_multiple($nids), $conf['display_mode']));
 
   // Perfomance debug info
   // $block->content .= '<br>' . t('Executed in @time sec', array('@time' => round(microtime(TRUE) - $start, 2)));
