@@ -1,7 +1,8 @@
 name = "Vimeo TEST"
 description = "Create a field type for videos from vimeo."
 core = 7.x
-package = Media
+package = Vimeo
+version = 7.x-1.0-alpha
 
 files[] = vimeo.handlers.inc
 files[] = vimeo.field.inc
