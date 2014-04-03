@@ -8,7 +8,7 @@ Field API:
 - Vimeo Thumbnail image will be saved locally.
 - All data will be stored in core field_data_{field} table.
 - No aditional tables was created.
-- Added very basic fucntionality to play video, without any control settings.
+- Added very basic play functionality, without any control settings.
 
 Ctools plugin:
 - New plugin support any types of CT and fields. And provide you possbility to render randomly any nodes based on specified field.
@@ -36,7 +36,7 @@ To use Ctools plugin:
 
 2. Add new plugin (For plugin was crteated own Vimeo group)
 
-3. Select CT and field that will be used for featch random results.
+3. Select CT and field that will be used for fetch random results.
 
 4. (Optional) Select display mode to render you nodes.
 
