@@ -1,0 +1,13 @@
+<?php
+/**
+ * @file
+ * Provides a simple field for videos from vimeo
+ *
+ * @author Alexei Goja
+ */
+
+// Load our default handlers
+// module_load_include('inc', 'vimeo', 'vimeo.handlers');
+
+module_load_include('inc', 'vimeo', 'vimeo.field');
+/* --- HOOKS ---------------------------------------------------------------- */
