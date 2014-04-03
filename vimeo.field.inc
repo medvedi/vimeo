@@ -67,6 +67,11 @@ function vimeo_field_data_property_info($name = NULL) {
       'type' => 'text',
       'setter callback' => 'entity_property_verbatim_set',
     ),
+    'html' => array(
+      'label' => 'Html',
+      'type' => 'text',
+      'setter callback' => 'entity_property_verbatim_set',
+    ),
   );
 
   // Add the default values for each of the vimeo field properties.
@@ -208,6 +213,7 @@ function vimeo_field_presave($entity_type, $entity, $field, $instance, $langcode
 
     // @todo: remove aditional check.
     if (isset($info)) {
+      $items[$delta]['html'] = $info->html;
       $items[$delta]['video_id'] = $info->video_id;
     }
   }
@@ -234,6 +240,10 @@ function vimeo_field_formatter_info() {
         'description_position' => 'bottom',
         'image_link' => 'none',
       ),
+    ),
+    'vimeo_field_html' => array(
+      'label' => t('Video player'),
+      'field types' => array('vimeo_field'),
     ),
   );
   return $info;
@@ -339,6 +349,13 @@ function vimeo_field_formatter_view($entity_type, $entity, $field, $instance, $l
       else {
         $element[$delta] = array();
       }
+    }
+    elseif ($display['type'] == 'vimeo_field_html') {
+      $element[$delta] = array(
+        array(
+          '#markup' => $item['html'],
+        ),
+      );
     }
   }
   return $element;
